@@ -1,6 +1,6 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-
+import React from "react";
+import { View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Container,
@@ -11,22 +11,24 @@ import {
   BoldText,
   SecondaryMessage,
   AddButton,
+  SignOutButton,
   Icon,
   BackButton,
   Title,
-} from './styles';
-import { StackNavigationProp } from '@react-navigation/stack';
+} from "./styles";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 interface HeaderProps {
   user?: {
     name: string;
     avatar_url: string;
-  }
+  };
 }
 
 type RootStackParamList = {
   Home: undefined;
   RegisterLoginData: undefined;
+  SignIn: undefined;
 };
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
@@ -35,7 +37,11 @@ export function Header({ user }: HeaderProps) {
   const { navigate, goBack } = useNavigation<NavigationProps>();
 
   function handleAddPass() {
-    navigate('RegisterLoginData');
+    navigate("RegisterLoginData");
+  }
+
+  function handleSignOut() {
+    navigate("SignIn");
   }
 
   return (
@@ -44,45 +50,41 @@ export function Header({ user }: HeaderProps) {
       style={{
         ...(user
           ? {
-            backgroundColor: '#1967FB'
-          }
+              backgroundColor: "#1967FB",
+            }
           : {
-            backgroundColor: '#FFFFFF'
-          })
+              backgroundColor: "#FFFFFF",
+            }),
       }}
     >
       {user ? (
         <>
           <AboutUser>
-            <Avatar source={{ uri: user.avatar_url }} />
+            <View>
+              <Avatar source={{ uri: user.avatar_url }} />
+            </View>
 
             <TextContainer>
               <HelloMessage>
                 Olá, <BoldText>{user.name}</BoldText>
               </HelloMessage>
 
-              <SecondaryMessage>
-                Sinta-se seguro aqui
-              </SecondaryMessage>
+              <SecondaryMessage>Sinta-se seguro aqui</SecondaryMessage>
             </TextContainer>
           </AboutUser>
 
-          <AddButton onPress={handleAddPass}>
-            <Icon
-              name="plus"
-              color="#FFFFFF"
-              size={24}
-            />
-          </AddButton>
+          <SignOutButton onPress={handleSignOut}>
+            <Icon name="power" color="#ffffff" size={24} />
+          </SignOutButton>
+
+          {/* <AddButton onPress={handleAddPass}>
+            <Icon name="plus" color="#FFFFFF" size={24} />
+          </AddButton> */}
         </>
       ) : (
         <>
           <BackButton onPress={goBack}>
-            <Icon
-              name="chevron-left"
-              color="#1967FB"
-              size={28}
-            />
+            <Icon name="chevron-left" color="#1967FB" size={28} />
           </BackButton>
 
           <Title>Cadastro de senha</Title>
