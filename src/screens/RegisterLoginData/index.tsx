@@ -7,13 +7,14 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import { StackNavigationProp } from "@react-navigation/stack";
 
+import { useAuth } from "../../hooks/useAuth";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Form/Input";
 import { Button } from "../../components/Form/Button";
 
 import { Container, Form } from "./styles";
-import { StackNavigationProp } from "@react-navigation/stack";
 
 interface FormData {
   service_name: string;
@@ -40,6 +41,7 @@ type NavigationProps = StackNavigationProp<
 >;
 
 export function RegisterLoginData() {
+  const { user } = useAuth();
   const { navigate } = useNavigation<NavigationProps>();
   const {
     control,
@@ -56,7 +58,7 @@ export function RegisterLoginData() {
     };
 
     try {
-      const dataKey = "@savepass:logins";
+      const dataKey = `@savepass:logins_user:${user.id}`;
       const storagedServiceData = await AsyncStorage.getItem(dataKey);
       const serviceData = storagedServiceData
         ? JSON.parse(storagedServiceData)
