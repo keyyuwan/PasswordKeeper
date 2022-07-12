@@ -18,6 +18,7 @@ The project is an app that allows users to save their services accounts password
 
 I included funcitonalities that goes beyond what the challenge was requesting, such as:
 
+- Created SignIn screen;
 - Authentication (with Google);
 - Link users accounts to their passwords saved in storage, so different users will have their passwords saved in different storages.
 - Used Context API to share the user's information throught the app;
