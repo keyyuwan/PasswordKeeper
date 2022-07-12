@@ -7,8 +7,6 @@ import { AuthRoutes } from "./auth.routes";
 export function Routes() {
   const { isAuthenticated } = useAuth();
 
-  console.log(isAuthenticated);
-
   return (
     <NavigationContainer>
       {isAuthenticated ? <AuthRoutes /> : <AppRoutes />}
