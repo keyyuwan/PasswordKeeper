@@ -1,5 +1,8 @@
 import React from "react";
 
+import { useAuth } from "../../hooks/useAuth";
+
+import GoogleSvg from "../../assets/google.svg";
 import {
   Container,
   Header,
@@ -13,9 +16,17 @@ import {
   Title,
 } from "./styles";
 
-import GoogleSvg from "../../assets/google.svg";
+interface INavigate {
+  navigate: (name: string) => void;
+}
 
 export function SignIn() {
+  const { signIn } = useAuth();
+
+  async function handleSignIn() {
+    await signIn();
+  }
+
   return (
     <Container>
       <Header>
@@ -32,7 +43,7 @@ export function SignIn() {
       </Header>
 
       <Footer>
-        <SignInButton>
+        <SignInButton onPress={handleSignIn}>
           <IconContainer>
             <GoogleSvg />
           </IconContainer>

@@ -1,6 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+import { useAuth } from "../../hooks/useAuth";
 
 import {
   Container,
@@ -16,14 +19,6 @@ import {
   BackButton,
   Title,
 } from "./styles";
-import { StackNavigationProp } from "@react-navigation/stack";
-
-interface HeaderProps {
-  user?: {
-    name: string;
-    avatar_url: string;
-  };
-}
 
 type RootStackParamList = {
   Home: undefined;
@@ -33,22 +28,27 @@ type RootStackParamList = {
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
-export function Header({ user }: HeaderProps) {
+interface HeaderProps {
+  showUserData: boolean;
+}
+
+export function Header({ showUserData = false }: HeaderProps) {
+  const { user, signOut } = useAuth();
   const { navigate, goBack } = useNavigation<NavigationProps>();
 
   function handleAddPass() {
     navigate("RegisterLoginData");
   }
 
-  function handleSignOut() {
-    navigate("SignIn");
+  async function handleSignOut() {
+    await signOut();
   }
 
   return (
     <Container
-      hasUserData={!!user}
+      hasUserData={showUserData}
       style={{
-        ...(user
+        ...(showUserData
           ? {
               backgroundColor: "#1967FB",
             }
@@ -57,11 +57,11 @@ export function Header({ user }: HeaderProps) {
             }),
       }}
     >
-      {user ? (
+      {showUserData ? (
         <>
           <AboutUser>
             <View>
-              <Avatar source={{ uri: user.avatar_url }} />
+              <Avatar source={{ uri: user.img }} />
             </View>
 
             <TextContainer>
@@ -77,9 +77,9 @@ export function Header({ user }: HeaderProps) {
             <Icon name="power" color="#ffffff" size={24} />
           </SignOutButton>
 
-          {/* <AddButton onPress={handleAddPass}>
+          <AddButton onPress={handleAddPass}>
             <Icon name="plus" color="#FFFFFF" size={24} />
-          </AddButton> */}
+          </AddButton>
         </>
       ) : (
         <>

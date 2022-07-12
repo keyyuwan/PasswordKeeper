@@ -63,12 +63,7 @@ export function Home() {
 
   return (
     <>
-      <Header
-        user={{
-          name: "Rocketseat",
-          avatar_url: "https://i.ibb.co/ZmFHZDM/rocketseat.jpg",
-        }}
-      />
+      <Header showUserData />
       <Container>
         <SearchBar
           placeholder="Qual senha você procura?"

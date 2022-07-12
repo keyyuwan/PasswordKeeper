@@ -1,17 +1,19 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SignIn } from "../screens/SignIn";
+import { Home } from "../screens/Home";
+import { RegisterLoginData } from "../screens/RegisterLoginData";
 
 const { Navigator, Screen } = createStackNavigator();
 
-export function AppRoutes() {
+export function AuthRoutes() {
   return (
     <Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Screen name="SignIn" component={SignIn} />
+      <Screen name="Home" component={Home} />
+      <Screen name="RegisterLoginData" component={RegisterLoginData} />
     </Navigator>
   );
 }
